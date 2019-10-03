@@ -162,6 +162,10 @@ class PersImage(TransformerMixin):
             d = interval[1]
             return (1 / maxy) * d if landscape is not None else d
 
+        def identity(interval):
+            # identity function
+            return 1
+
         def pw_linear(interval):
             """ This is the function defined as w_b(t) in the original PI paper
 
@@ -177,6 +181,9 @@ class PersImage(TransformerMixin):
                 return t / b
             if b <= t:
                 return 1
+
+        if self.weighting_type == 'identity':
+            return identity
 
         return linear
 
