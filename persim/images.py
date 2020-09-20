@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 
 from sklearn.base import TransformerMixin
 
+
 __all__ = ["PersImage"]
 
 class PersImage(TransformerMixin):
@@ -81,7 +82,7 @@ class PersImage(TransformerMixin):
         """
         # if diagram is empty, return empty image
         if len(diagrams) == 0:
-            return np.zeros((self.nx, self.ny))
+            return np.zeros((self.nx_b, self.ny_p))
         # if first entry of first entry is not iterable, then diagrams is singular and we need to make it a list of diagrams
         try:
             singular = not isinstance(diagrams[0][0], collections.Iterable)
@@ -91,7 +92,9 @@ class PersImage(TransformerMixin):
         if singular:
             diagrams = [diagrams]
 
-        dgs = [np.copy(diagram, np.float64) for diagram in diagrams]
+
+        dgs = [np.copy(diagram) for diagram in diagrams]
+        
         landscapes = [PersImage.to_landscape(dg) for dg in dgs]
 
         if not self.specs:
